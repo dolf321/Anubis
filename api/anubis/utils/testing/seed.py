@@ -2,6 +2,7 @@ import copy
 import math
 import random
 import string
+import pytest
 from datetime import datetime, timedelta
 
 from anubis.constants import THEIA_DEFAULT_OPTIONS
@@ -490,3 +491,26 @@ def seed():
 
     logger.info('committing')
     db.session.commit()
+
+
+@pytest.fixture()
+def course():
+    pass
+
+
+@pytest.fixture()
+def superuser(course) -> User:
+    return User.query.filter_by(netid="superuser").first()
+
+
+@pytest.fixture()
+def ta(course):
+    return User.query.filter_by(netid="ta").first()
+
+@pytest.fixture()
+def professor(course):
+    return User.query.filter_by(netid="professor").first()
+
+@pytest.fixture()
+def student(course):
+    return User.query.filter_by(netid="student").first()
